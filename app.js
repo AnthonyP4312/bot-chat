@@ -1,31 +1,47 @@
 const readline = require('readline');
-const io = require('socket.io');
-const socket = io('http://10.0.0.247:420/test');
+const io = require('socket.io-client');
+const socket = io('http://10.0.0.247:420');
+const colors = require('colors') // eslint-disable-line no-unused-vars
+const getStdin = require('get-stdin');
+const roll = require('lodash.random')
+
 
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
 });
 
-// loopChat()
-//
-// function loopChat(){
-//   rl.question('What do you think of Node.js? ', (answer) => {
-//     // TODO: Log the answer in a database
-//     console.log(`Thank you for your valuable feedback: ${answer}`);
-//
-//     rl.close();
-//     loopChat()
-//   });
-// }
+socket.on('chat', (user, message) => {
+  readline.clearLine(process.stdout, 0)
+  readline.moveCursor(process.stdout, -80, -1)
 
-rl.setPrompt('tanners: ');
+  console.log(`${user[getColor(user)]}: ${message}` + '\n')
+  rl.prompt(true);
+})
+
+console.log()
+console.log()
+console.log()
+rl.setPrompt('Tanners: '.magenta);
 rl.prompt();
 
 rl.on('line', function(line) {
-    console.log(line);
-    rl.prompt();
+  readline.clearLine(process.stdout, 0)
+  readline.moveCursor(process.stdout, -80, -1)
+  socket.emit('chat', line)
+  rl.prompt();
 }).on('close', function() {
-    console.log('Have a great day!');
     process.exit(0);
 });
+
+let userColors = new Map()
+let colorList = ['red', 'green', 'yellow', 'blue', 'cyan', 'magenta']
+//assigns colors for new users
+function getColor(user){
+  if (userColors.get(user)) {
+    return userColors.get(user)
+  }
+  let color = colorList[roll(0, colorList.length-1)]
+  userColors.set(user, color)
+  return userColors.get(user)
+}
