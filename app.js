@@ -1,6 +1,6 @@
 const readline = require('readline');
 const io = require('socket.io-client');
-const socket = io('http://10.0.0.247:420');
+const socket = io('http://73.47.72.133:420');
 const colors = require('colors') // eslint-disable-line no-unused-vars
 const getStdin = require('get-stdin');
 const roll = require('lodash.random')
@@ -35,7 +35,7 @@ rl.on('line', function(line) {
 });
 
 let userColors = new Map()
-let colorList = ['red', 'green', 'yellow', 'blue', 'cyan', 'magenta']
+let colorList = ['red', 'green', 'yellow', 'cyan', 'magenta']
 //assigns colors for new users
 function getColor(user){
   if (userColors.get(user)) {
