@@ -11,17 +11,18 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
-socket.on('chat', (user, message) => {
+socket.on('chat', (user, message, ts) => {
   readline.clearLine(process.stdout, 0)
   readline.moveCursor(process.stdout, -80, -1)
 
-  console.log(`${user[getColor(user)]}: ${message}` + '\n')
+  console.log(`[${ts}]${user[getColor(user)]}: ${message}` + '\n')
   rl.prompt(true);
 })
 
-console.log()
-console.log()
-console.log()
+for (var i = 0; i < 20; i++) {
+  console.log()
+}
+
 rl.setPrompt('Tanners: '.magenta);
 rl.prompt();
 
