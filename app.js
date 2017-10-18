@@ -19,7 +19,7 @@ socket.on('chat', (user, message, ts) => {
   rl.prompt(true);
 })
 
-for (var i = 0; i < 20; i++) {
+for (var i = 0; i < 50; i++) {
   console.log()
 }
 
